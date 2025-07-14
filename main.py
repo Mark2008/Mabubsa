@@ -1,4 +1,7 @@
-if __name__ == "__main__":
-    from ai import cmd_interface
+import sys
 
-    cmd_interface.run()
+if __name__ != "__main__":
+    sys.exit()
+
+from ai import gpt
+from webcrawl import crawler
