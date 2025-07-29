@@ -7,9 +7,9 @@ from openai import OpenAI
 # API Key 가져오기
 try:
     load_dotenv()
-    GPT_KEY = os.getenv("GPT_KEY")
+    GPT_KEY = os.getenv("OPENAI_API_KEY")
 except Exception as ex:
-    print('API KEY가 설정되지 않았습니다! (.env를 설정하세요)')
+    print('KEY가 설정되지 않았습니다! (.env에 OPENAI_API_KEY를 설정하세요)')
     raise ex
 
 # AI가 사용할 수 있는 도구(함수)들을 정의
