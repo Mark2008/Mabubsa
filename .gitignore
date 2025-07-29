@@ -1,6 +1,9 @@
 ## python ##
 __pycache__
-venv
+.venv
 
 ## dotenv ##
 .env
+
+## uv ##
+uv.lock
