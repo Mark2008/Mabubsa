@@ -29,7 +29,7 @@
      inkscape:document-units="mm"
      inkscape:zoom="4.3087087"
      inkscape:cx="223.1527"
-     inkscape:cy="161.88145"
+     inkscape:cy="106.1803"
      inkscape:window-width="1920"
      inkscape:window-height="1057"
      inkscape:window-x="-8"
@@ -113,7 +113,10 @@
      id="layer1">
     <g
        id="g8"
-       transform="translate(30.764727,-18.606212)">
+       transform="translate(30.764727,-18.606212)"
+       inkscape:export-filename="g8.png"
+       inkscape:export-xdpi="262.84927"
+       inkscape:export-ydpi="262.84927">
       <path
          id="path1"
          style="fill:#3e0c4c;fill-opacity:1;stroke-width:0.264583"
