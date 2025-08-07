@@ -1,7 +1,7 @@
 import os
 import json
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 
 # API Key 가져오기
@@ -47,27 +47,28 @@ class MessageHistory:
 # AI 관리 클래스
 class AIManager:
     def __init__(self):
-        self.client = OpenAI(api_key=GPT_KEY)
+        self.client = AsyncOpenAI(api_key=GPT_KEY)
         self.message_history = MessageHistory()
         self.message_history.add_system(SYSTEM_MESSAGE)
 
     # 사용자의 입력을 받고 AI의 입력을 받음, 대답 내용만 반환
-    def process(self, user_text):
+    async def process(self, user_text):
         self.message_history.add_user(user_text)
-        response = self.gpt_request()
+        response = await self.gpt_request()
         assistant_text = response.choices[0].message.content
         self.message_history.add_assistant(assistant_text)
         return assistant_text
 
 
     # gpt api에 요청을 하고 결과를 반환
-    def gpt_request(self):
-        completion = self.client.chat.completions.create(
+    async def gpt_request(self):
+        completion = await self.client.chat.completions.create(
             model = "gpt-4o-mini",
             messages = self.message_history.rec,
             tools = TOOL_DEFINITIONS,
             tool_choice = "auto"
         )
+        print(type(completion))
         return completion
     
 

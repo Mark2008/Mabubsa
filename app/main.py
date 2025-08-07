@@ -60,20 +60,9 @@ class PromptRequest(pydantic.BaseModel):
 @app.post('/api/enter-prompt')
 async def enter_prompt(request: PromptRequest):
     ai_manager = test_database[request.session]
-    result_text = ai_manager.process(request.prompt)
+    result_text = await ai_manager.process(request.prompt)
     print(ai_manager.message_history.rec)
     return {'result_text': result_text}
-
-# @app.post('/api/write-data')
-# async def some_request(request: DataRequest):
-#     test_database[request.session] = request.data
-#     print(test_database)
-#     return {"status": "success"}
-
-# @app.get('/api/view-data')
-# async def view_data(session: int):
-#     return {"data": test_database.get(session, "No data found")}
-
 
 
 ### 메인 메뉴 화면 ###
