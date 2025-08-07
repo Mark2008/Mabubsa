@@ -14,7 +14,7 @@ except Exception as ex:
 
 # AI가 사용할 수 있는 도구(함수)들을 정의
 try:
-    with open('ai/tools.json', 'r', encoding='UTF-8') as file:
+    with open('app/ai/tools.json', 'r', encoding='UTF-8') as file:
         TOOL_DEFINITIONS = json.load(file)
 except Exception as ex:
     print('tools.json을 찾을 수 없습니다!')
@@ -51,12 +51,14 @@ class AIManager:
         self.message_history = MessageHistory()
         self.message_history.add_system(SYSTEM_MESSAGE)
 
-    # 사용자의 입력을 받고 AI의 입력을 받음
+    # 사용자의 입력을 받고 AI의 입력을 받음, 대답 내용만 반환
     def process(self, user_text):
         self.message_history.add_user(user_text)
-        completion = self.gpt_request()
+        response = self.gpt_request()
+        assistant_text = response.choices[0].message.content
+        self.message_history.add_assistant(assistant_text)
+        return assistant_text
 
-        print(completion)
 
     # gpt api에 요청을 하고 결과를 반환
     def gpt_request(self):

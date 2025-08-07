@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="fabicon.png" rel="icon">
-    <link href="style.css" rel="stylesheet">
+    <link href="{{ url_for('static', path='fabicon.png') }}" rel="icon">
+    <link href="{{ url_for('static', path='style.css') }}" rel="stylesheet">
     <title>마법사</title>
 </head>
 <body>
+    <script>const url="{{ ip }}";</script>
+    <script src="{{ url_for('static', path='script.js') }}?after"></script>
+
     <div class="main">
         <div class="left-panel">
             <div class="chat-panel-wrapper">
                 <div class="chat-panel">
                     <div class="logo">
-                        <img src="g8.png" alt="Mabubsa image missing">
+                        <img src="{{ url_for('static', path='g8.png') }}" alt="Mabubsa image missing">
                     </div>
                     <div class="test">
                         대충 아무내용1
@@ -25,7 +28,11 @@
             </div>
             <div class="prompt-wrapper">
                 <div class="prompt">
-
+                    <textarea id="prompt-textarea">여기에 무언가를 입력하세용</textarea>
+                    
+                </div>
+                <div>
+                    <button onclick="prompt_submit()">대충 버튼</button>
                 </div>
             </div>
         </div>
