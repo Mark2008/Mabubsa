@@ -15,7 +15,7 @@ from ai import gpt
 
 
 
-### 서버 주소 .env에서 가져오기
+### 서버 주소 .env에서 가져오기.
 try:
     load_dotenv()
     SERVER_IP = os.getenv("SERVER_IP")
@@ -36,8 +36,8 @@ origins = [
 ]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=['*'],
+    # allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

@@ -4,41 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', path='fabicon.png') }}" rel="icon">
-    <link href="{{ url_for('static', path='style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='style.css') }}?after" rel="stylesheet">
     <title>마법사</title>
 </head>
 <body>
     <script>const url="{{ ip }}";</script>
-    <script src="{{ url_for('static', path='script.js') }}?after"></script>
 
     <div class="main">
         <div class="left-panel">
             <div class="chat-panel-wrapper">
-                <div class="chat-panel">
-                    <div class="logo">
+                <div id="chat-container" class="chat-panel">
+                    <div class="logo chatblock">
                         <img src="{{ url_for('static', path='g8.png') }}" alt="Mabubsa image missing">
                     </div>
-                    <div class="test">
-                        대충 아무내용1
-                    </div>
-                    <div class="test">
-                        대충 아무내용2
-                    </div>
+                    <!-- chat is added here -->
                 </div>
             </div>
             <div class="prompt-wrapper">
                 <div class="prompt">
                     <textarea id="prompt-textarea">여기에 무언가를 입력하세용</textarea>
-                    
+                    <div class="submit-button" onclick="prompt_submit()">
+                        <img src="{{ url_for('static', path='enter.svg') }}">
+                    </div>
                 </div>
-                <div>
-                    <button onclick="prompt_submit()">대충 버튼</button>
-                </div>
+                
             </div>
         </div>
-        <div class="right-panel">
+        <!-- <div class="right-panel">
             
-        </div>
+        </div> -->
     </div>
+    <script src="{{ url_for('static', path='script.js') }}?after"></script>
+
 </body>
 </html>
