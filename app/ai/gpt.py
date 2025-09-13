@@ -1,7 +1,26 @@
 import os
 import json
+
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
+
+from db.license import license
+from webcrawl import crawler
+
+
+# 함수 레지스트리
+FUNCTION_MAP = {
+    'find_license': license.find_license,
+    'get_available_license': license.get_available_license,
+    'find_cases': crawler.cn_serachquery
+}
+MAX_LOOP = 5
+
+SYSTEM_MESSAGE = \
+f"""
+그저 AI
+FUNCTION CALL MAX_LOOP: {MAX_LOOP}
+"""
 
 
 # API Key 가져오기
@@ -20,10 +39,6 @@ except Exception as ex:
     print('tools.json을 찾을 수 없습니다!')
     raise ex
 
-SYSTEM_MESSAGE = \
-"""
-그저 AI
-"""
 
 
 # 채팅 기록을 저장한다
@@ -42,6 +57,8 @@ class MessageHistory:
 
     def add_assistant(self, content):
         self.rec.append({'role': 'assistant', 'content': content})
+
+    # def add_toolcall(self, tool_calls, )
         
 
 # AI 관리 클래스
@@ -54,8 +71,29 @@ class AIManager:
     # 사용자의 입력을 받고 AI의 입력을 받음, 대답 내용만 반환
     async def process(self, user_text):
         self.message_history.add_user(user_text)
-        response = await self.gpt_request()
-        assistant_text = response.choices[0].message.content
+
+        for _ in range(MAX_LOOP):
+            response = await self.gpt_request()
+            msg = response.choices[0].message
+            print(msg, type(msg))
+            if msg.tool_calls:
+                self.message_history.rec.append({
+                    'role': 'assistant',
+                    'tool_calls': msg.tool_calls
+                })
+
+                for tool_call in msg.tool_calls:
+                    func_name = tool_call.function.name
+                    args = json.loads(tool_call.function.arguments)
+                    result = FUNCTION_MAP[func_name](**args)
+                    self.message_history.rec.append({
+                        'role': 'tool',
+                        'tool_call_id': tool_call.id,
+                        'content': json.dumps(result, ensure_ascii=False)
+                    })
+            else:
+                break
+        assistant_text = msg.content or "뭔가 잘못됨" 
         self.message_history.add_assistant(assistant_text)
         return assistant_text
 
