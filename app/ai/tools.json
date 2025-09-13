@@ -1,23 +1,55 @@
 [
     {
-        "type": "function",
+        "type":"function",
         "function": {
-            "name": "add_schedule",
-            "description": "새 과제 일정을 추가합니다. 이미 같은 과목·과제명이 있으면 오류를 반환합니다.",
+            "name": "find_license",
+            "description": "해당하는 라이선스의 전문을 반환합니다.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "subject": {"type": "string", "description": "과목명"},
-                    "assignment_name": {"type": "string", "description": "과제명"},
-                    "due_date": {"type": "string", "format": "date", "description": "마감일 (YYYY-MM-DD 형식)"},
-                    "due_time": {"type": "string", "format": "time", "description": "마감시간 (HH:MM 형식)"},
-                    "description": {"type": "string", "description": "과제 설명"},
-                    "detail": {"type": "string", "description": "세부 정보"},
-                    "received_date": {"type": "string", "format": "date", "description": "과제 출제일"},
-                    "submission_method": {"type": "string", "description": "제출 방법"},
-                    "submission_detail": {"type": "string", "description": "제출 세부사항"}
+                    "license": {
+                        "type": "string",
+                        "description": "라이선스의 이름"
+                    },
+                    "slug": {
+                        "type": "string",
+                        "description": "라이선스의 종류"
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "라이선스의 버전"
+                    }
                 },
-                "required": ["subject", "assignment_name", "due_date"]
+                "required": ["license", "slug"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_available_license",
+            "description": "find_license를 통해 얻을 수 있는 라이선스의 집합을 반환합니다.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "find_cases",
+            "description": "판례를 검색하고 이들을 반환합니다.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "keyword": {
+                        "type": "string",
+                        "description": "판례를 검색할 키워드"
+                    }
+                },
+                "required": ["keyword"]
             }
         }
     }
