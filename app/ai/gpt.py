@@ -16,13 +16,6 @@ FUNCTION_MAP = {
 }
 MAX_LOOP = 5
 
-SYSTEM_MESSAGE = \
-f"""
-그저 AI
-FUNCTION CALL MAX_LOOP: {MAX_LOOP}
-"""
-
-
 # API Key 가져오기
 try:
     load_dotenv()
@@ -37,6 +30,14 @@ try:
         TOOL_DEFINITIONS = json.load(file)
 except Exception as ex:
     print('tools.json을 찾을 수 없습니다!')
+    raise ex
+
+# Instruction 가져오기
+try:
+    with open('app/ai/instructions.txt', encoding='utf-8') as file:
+        SYSTEM_MESSAGE = file.read()
+except Exception as ex:
+    print('instructions.txt를 찾을 수 없습니다!')
     raise ex
 
 
@@ -67,6 +68,7 @@ class AIManager:
         self.client = AsyncOpenAI(api_key=GPT_KEY)
         self.message_history = MessageHistory()
         self.message_history.add_system(SYSTEM_MESSAGE)
+        self.message_history.add_system(f'FUNCTION CALL MAX_LOOP: {MAX_LOOP}')
 
     # 사용자의 입력을 받고 AI의 입력을 받음, 대답 내용만 반환
     async def process(self, user_text):
