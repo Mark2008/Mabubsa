@@ -9,18 +9,10 @@
                 "properties": {
                     "license": {
                         "type": "string",
-                        "description": "라이선스의 이름"
-                    },
-                    "slug": {
-                        "type": "string",
-                        "description": "라이선스의 종류"
-                    },
-                    "version": {
-                        "type": "string",
-                        "description": "라이선스의 버전"
+                        "description": "라이선스의 이름, 종류, 버전"
                     }
                 },
-                "required": ["license", "slug"]
+                "required": ["license"]
             }
         }
     },
@@ -44,12 +36,12 @@
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "keyword": {
+                    "query": {
                         "type": "string",
                         "description": "판례를 검색할 키워드"
                     }
                 },
-                "required": ["keyword"]
+                "required": ["query"]
             }
         }
     }
