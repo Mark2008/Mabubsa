@@ -3,9 +3,11 @@ from typing import Dict
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
+import global_driver
+
 
 def cn_serachquery(query: str) -> Dict[str, str]:
-    driver = webdriver.Firefox()
+    driver = global_driver.DRIVER
     driver.get(f"https://casenote.kr/search/?q={query}")
 
     elems = driver.find_elements(By.CLASS_NAME, 'title')
@@ -30,7 +32,5 @@ def cn_serachquery(query: str) -> Dict[str, str]:
         content = driver.find_element(By.CLASS_NAME, 'cn-case-body')
 
         saved[title.text] = content.text
-
-    driver.close()
 
     return saved

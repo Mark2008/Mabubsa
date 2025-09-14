@@ -8,5 +8,6 @@ __pycache__
 ## uv ##
 uv.lock
 
-## license db ##
+## db ##
+app/db/cache/law/*.txt
 app/db/license/cache/*.txt
