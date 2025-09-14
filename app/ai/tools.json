@@ -66,7 +66,7 @@
                         "description": "검색할 법령 개수"
                     }
                 },
-                "required": ["query"]
+                "required": ["query", "situation"]
             }
         }
     }
