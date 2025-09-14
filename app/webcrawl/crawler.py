@@ -29,7 +29,7 @@ def cn_serachquery(query: str) -> Dict[str, str]:
         title = driver.find_element(By.CLASS_NAME, 'cn-case-title')
         content = driver.find_element(By.CLASS_NAME, 'cn-case-body')
 
-        saved[title] = content
+        saved[title.text] = content.text
 
     driver.close()
 
