@@ -5,16 +5,19 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI
 
 from db.license import license
+from db.law import law
 from webcrawl import crawler
 
+import globals
 
 # 함수 레지스트리
 FUNCTION_MAP = {
     'find_license': license.find_license,
     'get_available_license': license.get_available_license,
-    'find_cases': crawler.cn_serachquery
+    'find_cases': crawler.cn_serachquery,
+    'search_laws_batch': law.search_laws_batch
 }
-MAX_LOOP = 5
+MAX_LOOP = 10
 
 # API Key 가져오기
 try:
@@ -47,6 +50,9 @@ class MessageHistory:
     def __init__(self):
         self.rec = []
 
+    def get_record(self):
+        return self.rec
+
     def add_something(self, role, content):
         self.rec.append({'role': role, 'content': content})
 
@@ -77,7 +83,7 @@ class AIManager:
         for _ in range(MAX_LOOP):
             response = await self.gpt_request()
             msg = response.choices[0].message
-            print(msg, type(msg))
+            # print(msg, type(msg))
             if msg.tool_calls:
                 self.message_history.rec.append({
                     'role': 'assistant',
@@ -87,7 +93,7 @@ class AIManager:
                 for tool_call in msg.tool_calls:
                     func_name = tool_call.function.name
                     args = json.loads(tool_call.function.arguments)
-                    result = FUNCTION_MAP[func_name](**args)
+                    result = await FUNCTION_MAP[func_name](**args)
                     self.message_history.rec.append({
                         'role': 'tool',
                         'tool_call_id': tool_call.id,
@@ -103,12 +109,12 @@ class AIManager:
     # gpt api에 요청을 하고 결과를 반환
     async def gpt_request(self):
         completion = await self.client.chat.completions.create(
-            model = "gpt-4o-mini",
+            model = globals.MODEL,
             messages = self.message_history.rec,
             tools = TOOL_DEFINITIONS,
             tool_choice = "auto"
         )
-        print(type(completion))
+        # print(type(completion))
         return completion
     
 

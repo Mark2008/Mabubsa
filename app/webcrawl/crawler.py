@@ -3,11 +3,11 @@ from typing import Dict
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-import global_driver
+import globals
 
 
-def cn_serachquery(query: str) -> Dict[str, str]:
-    driver = global_driver.DRIVER
+async def cn_serachquery(query: str) -> Dict[str, str]:
+    driver = globals.DRIVER
     driver.get(f"https://casenote.kr/search/?q={query}")
 
     elems = driver.find_elements(By.CLASS_NAME, 'title')

@@ -13,6 +13,7 @@ from uuid import uuid4
 
 from ai import gpt
 
+import globals        ## 드라이버 열기
 
 
 ### 서버 주소 .env에서 가져오기.
@@ -74,7 +75,24 @@ async def root(request: Request):
         'ip': SERVER_IP
     })
 
+async def test():
+    from db.law import law
+
+    res = await law.search_laws_batch('자동차')
+        
+    print(res)
+
 # 일반 파이썬으로 실행했을 때
 if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run('main:app', host="0.0.0.0")
+    try:
+        import uvicorn
+        uvicorn.run('main:app', host="0.0.0.0")
+        
+        # import trio
+        # trio.run(test)
+
+    except Exception as e:
+        raise e
+    
+    finally:
+        globals.DRIVER.close()

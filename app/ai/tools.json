@@ -44,5 +44,30 @@
                 "required": ["query"]
             }
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_laws_batch",
+            "description": "현행 관련 법령을 검색합니다.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "법령과 관련된 키워드"
+                    },
+                    "situation": {
+                        "type": "string",
+                        "description": "관련된 검색 결과를 찾기 위해 현재 상황을 요약적으로 기입합니다."
+                    },
+                    "n": {
+                        "type": "integer",
+                        "description": "검색할 법령 개수"
+                    }
+                },
+                "required": ["query"]
+            }
+        }
     }
 ]
