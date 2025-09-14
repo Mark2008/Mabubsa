@@ -9,7 +9,7 @@
                 "properties": {
                     "license": {
                         "type": "string",
-                        "description": "라이선스의 이름, 종류, 버전"
+                        "description": "무조건 get_available_license에 존재하는 것만을 호출해야 합니다."
                     }
                 },
                 "required": ["license"]
