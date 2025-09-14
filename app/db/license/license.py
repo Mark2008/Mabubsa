@@ -67,11 +67,11 @@ get_cc_by_sa_deed_4_0 = __cc_deed_factory_4_0('by-sa')
 
 
 # 펑션콜 전용 함수
-def find_license(license: str):
+async def find_license(license: str):
     if license in LICENSE_MAP.keys():
         return LICENSE_MAP[license]()
     else:
         return {'error': 'cannot find requested function'}
 
-def get_available_license():
+async def get_available_license():
     return list(LICENSE_MAP.keys())
