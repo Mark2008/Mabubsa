@@ -51,8 +51,11 @@ async function prompt_submit() {
         const data = await response.json();
         console.log('send',content);
         console.log('i get', data);
-        
-        assistant_chat.innerHTML = data['result_text'];
+
+        console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1');
+        console.log(marked.parse(data['result_text']));
+
+        assistant_chat.innerHTML = marked.parse(data['result_text']);
     }
     catch (error) {
         console.log(error);
@@ -77,7 +80,7 @@ async function make_chatbox_assistant(content) {
     newElement.setAttribute('class', 'chatblock colored');
     newElement.innerHTML = `
         <img src='static/fabicon.png'>
-        <div>
+        <div class="markdown-body">
             ${content}
         </div>
     `;

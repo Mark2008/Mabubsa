@@ -104,3 +104,13 @@
 .colored {
     background-color: #e6e6e6;
 }
+
+/* markdown */
+.markdown-body {
+    background-color: transparent;
+}
+
+.markdown-body * {
+    background-color: transparent !important;
+    color: #000000;
+}
